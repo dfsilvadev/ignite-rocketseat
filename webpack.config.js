@@ -1,4 +1,7 @@
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { dirname } = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const path = require("path");
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -18,15 +21,15 @@ module.exports = {
     contentBase: path.resolve(__dirname, "public"),
   },
   plugins: [
-    // new CleanWebpackPlugin(),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
       filename: "./index.html",
     }),
-    // new MiniCssExtractPlugin({
-    //   filename: "[name].css",
-    //   chunkFilename: "[id].css",
-    // }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css",
+    }),
   ],
   module: {
     rules: [
@@ -36,19 +39,22 @@ module.exports = {
         include: /src/,
         use: "babel-loader",
       },
-      // {
-      //   test: /\.css$/i,
-      //   use: [MiniCssExtractPlugin.loader, "css-loader"],
-      // },
-      // {
-      //   test: /\.(jpg|png|svg)$/,
-      //   exclude: /node_modules/,
-      //   include: /src/,
-      //   loader: "file-loader",
-      //   options: {
-      //     name: "[path][name].[hash].[ext]",
-      //   },
-      // },
+      {
+        test: /\.(css|scss|sass)$/i,
+        use: [
+          isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
+        ],
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        exclude: /node_modules/,
+        include: /src/,
+        loader: "file-loader",
+        options: {
+          name: "[path][name].[hash].[ext]",
+        },
+      },
     ],
   },
 };
