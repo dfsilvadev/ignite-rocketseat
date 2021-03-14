@@ -1,10 +1,11 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const path = require("path");
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  devtool: "eval-source-map",
-  mode: "development",
+  devtool: isDevelopment ? "eval-source-map" : "source-map",
+  mode: isDevelopment ? "development" : "production",
   entry: [path.join(__dirname, "src", "index")],
   output: {
     filename: "bundle.js",
