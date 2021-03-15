@@ -21,7 +21,8 @@ section.repository-list {
       box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
 
       display: grid;
-      grid-template-rows: 65px 1fr 65px;
+      grid-template-rows: 40px 1fr 55.33px;
+      row-gap: 1.5rem;
 
       // & + li {
       //   margin-top: 1.25rem;
@@ -29,21 +30,25 @@ section.repository-list {
 
       strong {
         text-transform: lowercase;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
       }
 
       p {
         color: #444;
-        margin-top: 0.5rem;
       }
 
       a {
-        display: inline-block;
         background-color: #8257e6;
-        margin-top: 1rem;
         padding: 0.938rem 2.5rem;
         border-radius: 8px;
         text-align: center;
         color: #fff;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         transition: filter 0.2s ease;
 
