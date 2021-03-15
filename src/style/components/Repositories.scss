@@ -7,9 +7,28 @@ section.repository-list {
   }
 
   ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    height: auto;
+
     li {
-      & + li {
-        margin-top: 1.25rem;
+      background-color: #fff;
+      height: auto;
+      padding: 0.938rem;
+      border-radius: 8px;
+
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
+
+      display: grid;
+      grid-template-rows: 65px 1fr 65px;
+
+      // & + li {
+      //   margin-top: 1.25rem;
+      // }
+
+      strong {
+        text-transform: lowercase;
       }
 
       p {
@@ -19,8 +38,18 @@ section.repository-list {
 
       a {
         display: inline-block;
+        background-color: #8257e6;
         margin-top: 1rem;
-        color: #8257e6;
+        padding: 0.938rem 2.5rem;
+        border-radius: 8px;
+        text-align: center;
+        color: #fff;
+
+        transition: filter 0.2s ease;
+
+        &:hover {
+          filter: brightness(0.9);
+        }
       }
     }
   }
