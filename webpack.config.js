@@ -59,6 +59,7 @@ module.exports = {
         use: [
           isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
+          "sass-loader",
         ],
       },
       {
