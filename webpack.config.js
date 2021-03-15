@@ -19,6 +19,11 @@ module.exports = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, "public"),
+    open: true,
+    overlay: {
+      warnings: true,
+      errors: true,
+    },
   },
   plugins: [
     new CleanWebpackPlugin(),
