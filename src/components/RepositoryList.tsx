@@ -3,10 +3,17 @@ import { RepositoryItem } from "./RepositoryItem";
 
 import "../style/components/Repositories.scss";
 
-export function RepositoryList() {
-  const [repositories, setRepositories] = useState([]);
+interface Repository {
+  id: number;
+  name: string;
+  description: string;
+  html_url: string;
+}
 
-  const getGitHubRepositories = (user) => {
+export function RepositoryList() {
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+
+  const getGitHubRepositories = (user: string) => {
     return fetch(`https://api.github.com/users/${user}/repos`)
       .then((response) => response.json())
       .then((data) => setRepositories(data));
@@ -21,7 +28,9 @@ export function RepositoryList() {
       <div className="repository-list">
         <h1>Lista de repositórios</h1>
         <ul>
-          <RepositoryItem repositories={repositories} />
+          {repositories.map((repository) => (
+            <RepositoryItem repository={repository} key={repository.id} />
+          ))}
         </ul>
       </div>
     </section>
