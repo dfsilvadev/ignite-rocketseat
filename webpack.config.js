@@ -2,6 +2,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { dirname } = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ReactRefrashWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const path = require("path");
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -24,8 +25,10 @@ module.exports = {
       warnings: true,
       errors: true,
     },
+    hot: true,
   },
   plugins: [
+    isDevelopment && new ReactRefrashWebpackPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
@@ -35,14 +38,21 @@ module.exports = {
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
-  ],
+  ].filter(Boolean),
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         include: /src/,
-        use: "babel-loader",
+        use: {
+          loader: "babel-loader",
+          options: {
+            plugins: [
+              isDevelopment && require.resolve("react-refresh/babel"),
+            ].filter(Boolean),
+          },
+        },
       },
       {
         test: /\.(css|scss|sass)$/i,
