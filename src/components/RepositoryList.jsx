@@ -1,19 +1,26 @@
+import { useState, useEffect } from "react";
 import { RepositoryItem } from "./RepositoryItem";
 
 import "../style/components/Repositories.scss";
 
-const repository = {
-  name: "unform",
-  description: "Forms in React",
-  link: "https://github.com/unform/unform",
-};
-
 export function RepositoryList() {
+  const [repositories, setRepositories] = useState([]);
+
+  const getGitHubRepositories = (user) => {
+    return fetch(`https://api.github.com/users/${user}/repos`)
+      .then((response) => response.json())
+      .then((data) => setRepositories(data));
+  };
+
+  useEffect(() => {
+    getGitHubRepositories("daniel-silva-dxp");
+  }, []);
+
   return (
     <section className="repository-list">
       <h1>Lista de repositórios</h1>
       <ul>
-        <RepositoryItem repository={repository} />
+        <RepositoryItem repositories={repositories} />
       </ul>
     </section>
   );
